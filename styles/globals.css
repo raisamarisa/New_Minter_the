@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Montserrat:wght@500&family=Orbitron:wght@500&display=swap');
+body{
+	font-family: 'VT323', monospace;
+
+
+}
+#main_content{
+	background-image:url('../public/IMG/home.png');
+	/* background-position: bottom; */
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 100vh;
+  position: relative;
+  border: none !important;
+}
+
+@font-face {
+	font-family: "Ahsing";
+	src: url("../public/fonts/Ahsing-Regular.otf");
+  }
+
+  
+@layer components{
+    .AllPading {
+     @apply   max-w-7xl m-auto    
+    }
+    .layout {
+        @apply px-5 py-7 md:px-10 md:py-10  
+       }
+     .Htext{
+        @apply text-xl font-semibold leading-none tracking-tight text-gray-900  dark:text-white
+     } 
+     .box_padding{
+        @apply px-5
+     }   
+   
+}
+
+html{
+    scroll-behavior:smooth !important;
+}
+
+ #center{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: 0%;
+  }
+  #overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+   bottom: 0;
+   height: 100vh;
+    opacity: 0.5;
+    background-color: #000;
+ 
+}
