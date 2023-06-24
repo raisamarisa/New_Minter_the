@@ -10,8 +10,8 @@ body{
 
 }
 #main_content{
-	background-image:url('../public/IMG/home.png');
-	/* background-position: bottom; */
+	background-image:url('../public/IMG/01_1920x1080.png');
+	background-position: center; 
 	background-size: cover;
 	background-repeat: no-repeat;
 	height: 100vh;
