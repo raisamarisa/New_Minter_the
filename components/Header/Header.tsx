@@ -38,7 +38,9 @@ useEffect(() => {
                 <div className="cursor-pointer flex justify-center items-center">
                     {/* logo */}
         
-                    <div className="font-Ahsing text-2xl md:text-3xl  font-bold ml-2 tracking-[1px] text-white">Name</div>
+                    <a href=""  rel="noreferrer" target="_blank">
+                        <AiOutlineTwitter size={30} className='text-white'/>
+                     </a>
                 </div>
                 {/* logo */}
 
@@ -50,9 +52,7 @@ useEffect(() => {
                     {/* button */}
                     <div className="flex items-center gap-2">
                 
-                     <a href=""  rel="noreferrer" target="_blank">
-                        <AiOutlineTwitter size={30} className='text-white'/>
-                     </a>
+                   
                      <ExampleButton />
                     </div>
                 </div>
