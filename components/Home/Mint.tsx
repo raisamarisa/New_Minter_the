@@ -43,7 +43,7 @@ export function Mint() {
     }
     
   };
-
+//bg-[#29064e]
   useEffect(() => {
     dispatch(fetchTotalMint());
   }, [loading]);
@@ -62,7 +62,7 @@ export function Mint() {
           <button
             disabled={loading}
             onClick={() => Mintnft()}
-            className="border-[2px] bg-[#29064e] text-white   font-bold py-2 px-10  tracking-[2px] font-Montserrat uppercase "
+            className="border-[2px] border-[#29064e] text-[#29064e] bg-white  font-bold py-2 px-10  tracking-[2px] font-Montserrat uppercase "
           >
             {loading ? "Minting.." : "Mint"}
           </button>
