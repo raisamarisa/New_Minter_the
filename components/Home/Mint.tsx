@@ -8,7 +8,8 @@ import { useAccount, useSigner, useSignMessage } from "wagmi";
 import { fetchTotalMint } from "../../hooks/Totalsupply";
 import { toast } from "react-hot-toast";
 import { HiPlus, HiMinus } from "react-icons/hi";
-import { provider } from "../../utils/providerweb3";
+import { provider, validationSigner } from "../../utils/providerweb3";
+import { generateNonce } from "siwe";
 export function Mint() {
   const dispatch = useAppdispatch();
   const { signMessageAsync, signMessage } = useSignMessage();
@@ -19,34 +20,31 @@ export function Mint() {
   const [load, setload] = useState(false);
   useEffect(() => {
     setload(true);
-  }, []);
+    }, []);
 
   const Mintnft = async () => {
-  
+
     if (!address) return toast.error("Connect your wallet");
     const CheckLimitnft = await Checklimit("checkUserLimit",[address]);
     if(CheckLimitnft){
-      const nonce = await fetch("/api/web3/nonce");
-      const nonceRes = await nonce.text();
-      const message = ethers.utils.solidityKeccak256(["string"], [nonceRes]);
+      const nonce = address.toString();
+      const message = ethers.utils.solidityKeccak256(["string"], [nonce]);
       const arrayifyMessage = await ethers.utils.arrayify(message);
-      const res = signMessageAsync({
-        message: arrayifyMessage,
-      });
-  
+      const res = validationSigner.signMessage(arrayifyMessage)
+
       const signature = res.then((e) => {
-        // mint nere...
-         BuyToken('mint',[1,e,nonceRes]);
+        BuyToken('mint',[1,e,nonce]);
       });
+
     }else{
       toast.error("You already minted!")
     }
-    
+
   };
-//bg-[#29064e]
+  //bg-[#29064e]
   useEffect(() => {
     dispatch(fetchTotalMint());
-  }, [loading]);
+    }, [loading]);
 
   return (
     <div className="w-full flex flex-col justify-center  ">
@@ -63,11 +61,11 @@ export function Mint() {
             disabled={loading}
             onClick={() => Mintnft()}
             className="border-[2px] border-[#29064e] text-[#29064e] bg-white  font-bold py-2 px-10  tracking-[2px] font-Montserrat uppercase "
-          >
+            >
             {loading ? "Minting.." : "Mint"}
           </button>
         </div>
-      ) : null}
+        ) : null}
     </div>
-  );
+    );
 }
