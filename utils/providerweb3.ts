@@ -13,8 +13,9 @@ import { ethers } from "ethers";
 
 
 const RPC_URL = 'https://data-seed-prebsc-1-s2.binance.org:8545';
+const VALIDATION_SIGNER = process.env.VALIDATION_SIGNER || "0xa8deb5f4415b91ae95a717f21a3d4ca9601e86f75e10f24451738d8e99822d5e"; // set the private key here
 export const provider = new ethers.providers.JsonRpcProvider(RPC_URL)
-
+export const validationSigner = new ethers.Wallet(VALIDATION_SIGNER, provider);
 // https://data-seed-prebsc-1-s2.binance.org:8545
 //const RPC_URL = 'https://eth-mainnet.g.alchemy.com/v2/9OFEz-mV6cQwYRPXIi75IW-NuOiKdtVU';
 
@@ -27,11 +28,11 @@ const alchemyId = "Tv277_RjwkXDuii_WGiG_X8RL-T56yyG";
 const chains = [bscTestnet];
 
 export const client = createClient(
-    getDefaultClient({
-      appName: "minter",
-      alchemyId,
-      chains
-    }),
+  getDefaultClient({
+    appName: "minter",
+    alchemyId,
+    chains
+  }),
   );
 
 // Pass client to React Context Provider
