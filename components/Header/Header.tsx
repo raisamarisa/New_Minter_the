@@ -38,7 +38,7 @@ useEffect(() => {
                 <div className="cursor-pointer flex justify-center items-center">
                     {/* logo */}
         
-                    <a href=""  rel="noreferrer" target="_blank">
+                    <a href="https://twitter.com/EmpyreanSaga"  rel="noreferrer" target="_blank">
                         <AiOutlineTwitter size={30} className='text-white'/>
                      </a>
                 </div>

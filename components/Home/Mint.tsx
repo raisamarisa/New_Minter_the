@@ -47,7 +47,7 @@ export function Mint() {
     }, [loading]);
 
   return (
-    <div className="w-full flex flex-col justify-center  ">
+    <div className="w-full flex flex-col justify-center mb-6 md:mb-0">
       <div className=" text-center">
         <h2 className="text-4xl text-white font-extrabold">{supply}/345</h2>
         {/* <h2 className='text-lg uppercase py-2 text-white dark:text-white'>Price  {price?.toFixed(3)} ETH</h2> */}
