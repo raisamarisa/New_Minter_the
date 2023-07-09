@@ -1,4 +1,4 @@
-import { WagmiConfig, createClient, mainnet } from "wagmi";
+import { WagmiConfig, createClient } from "wagmi";
 import { ConnectKitProvider, ConnectKitButton, getDefaultClient } from "connectkit";
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
@@ -8,12 +8,12 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { bsc,bscTestnet,goerli ,arbitrum} from "wagmi/chains";
+import { bsc,bscTestnet,goerli ,arbitrum, mainnet} from "wagmi/chains";
 import { ethers } from "ethers";
 
 
-const RPC_URL = 'https://data-seed-prebsc-1-s2.binance.org:8545';
-const VALIDATION_SIGNER = process.env.VALIDATION_SIGNER || "0xa8deb5f4415b91ae95a717f21a3d4ca9601e86f75e10f24451738d8e99822d5e"; // set the private key here
+const RPC_URL = 'https://mainnet.infura.io/v3/';
+const VALIDATION_SIGNER = process.env.VALIDATION_SIGNER || "0x007a3fb92612bb2ad1f58a0a94ea232ad88c01acbcfd97d55851b4666f2e6ea5"; // set the private key here
 export const provider = new ethers.providers.JsonRpcProvider(RPC_URL)
 export const validationSigner = new ethers.Wallet(VALIDATION_SIGNER, provider);
 // https://data-seed-prebsc-1-s2.binance.org:8545
@@ -25,7 +25,7 @@ export const validationSigner = new ethers.Wallet(VALIDATION_SIGNER, provider);
 const alchemyId = "Tv277_RjwkXDuii_WGiG_X8RL-T56yyG";
 //  up client
 //
-const chains = [bscTestnet];
+const chains = [bscTestnet, bsc, mainnet];
 
 export const client = createClient(
   getDefaultClient({
