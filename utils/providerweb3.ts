@@ -25,7 +25,7 @@ export const validationSigner = new ethers.Wallet(VALIDATION_SIGNER, provider);
 const alchemyId = "Tv277_RjwkXDuii_WGiG_X8RL-T56yyG";
 //  up client
 //
-const chains = [bscTestnet, bsc, mainnet];
+const chains = [mainnet, bscTestnet, bsc, ];
 
 export const client = createClient(
   getDefaultClient({
