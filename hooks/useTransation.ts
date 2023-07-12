@@ -35,7 +35,8 @@ const useDirectCall = (signer:any,contractaddress:string) => {
     const myContract = await getContractInstance(signer,contractaddress);
     try {
       
-    //  const gasprice =await myContract.estimateGas?.[name](...args,{value: (ethers.utils.parseUnits(Amount))});
+      const gasprice =await myContract.estimateGas?.[name](...args);
+      console.log(gasprice)
       const response = await myContract?.[name](
         ...args,
     );
@@ -46,8 +47,8 @@ const useDirectCall = (signer:any,contractaddress:string) => {
     } catch (error) {
       setSellTokenLoading(false);
       console.log(error);
-      toast.error("Something went wrong try again")
-      //failed
+      toast.error("Mint hasn't started")
+
     }
   };
 

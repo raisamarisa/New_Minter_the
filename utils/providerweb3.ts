@@ -12,10 +12,8 @@ import { bsc,bscTestnet,goerli ,arbitrum, mainnet} from "wagmi/chains";
 import { ethers } from "ethers";
 
 
-const RPC_URL = 'https://mainnet.infura.io/v3/';
-const VALIDATION_SIGNER = process.env.VALIDATION_SIGNER || "0x007a3fb92612bb2ad1f58a0a94ea232ad88c01acbcfd97d55851b4666f2e6ea5"; // set the private key here
+const RPC_URL = 'https://rpc.flashbots.net';
 export const provider = new ethers.providers.JsonRpcProvider(RPC_URL)
-export const validationSigner = new ethers.Wallet(VALIDATION_SIGNER, provider);
 // https://data-seed-prebsc-1-s2.binance.org:8545
 //const RPC_URL = 'https://eth-mainnet.g.alchemy.com/v2/9OFEz-mV6cQwYRPXIi75IW-NuOiKdtVU';
 

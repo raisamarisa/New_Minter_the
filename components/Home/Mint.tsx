@@ -7,9 +7,7 @@ import { NFT_CONTRACT, NFT_PRICE } from "../../config";
 import { useAccount, useSigner, useSignMessage } from "wagmi";
 import { fetchTotalMint } from "../../hooks/Totalsupply";
 import { toast } from "react-hot-toast";
-import { HiPlus, HiMinus } from "react-icons/hi";
-import { provider, validationSigner } from "../../utils/providerweb3";
-import { generateNonce } from "siwe";
+import axios from "axios"
 export function Mint() {
   const dispatch = useAppdispatch();
   const { signMessageAsync, signMessage } = useSignMessage();
@@ -26,14 +24,17 @@ export function Mint() {
 
     if (!address) return toast.error("Connect your wallet");
     const CheckLimitnft = await Checklimit("checkUserLimit",[address]);
+
     if(CheckLimitnft){
       const nonce = address.toString();
-      const message = ethers.utils.solidityKeccak256(["string"], [nonce]);
-      const arrayifyMessage = await ethers.utils.arrayify(message);
-      const res = validationSigner.signMessage(arrayifyMessage)
+      let res = axios.post('/api/verify', {
+        msg: nonce
+      })
 
       const signature = res.then((e) => {
-        BuyToken('mint',[1,e,nonce]);
+        BuyToken('mint',[1,e.data.result,nonce])
+      }).catch(err => {
+        toast.error(err.response.data)
       });
 
     }else{

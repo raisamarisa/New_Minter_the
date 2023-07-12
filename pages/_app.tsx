@@ -6,12 +6,14 @@ import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
 import { client } from '../utils/providerweb3';
 import { ConnectKitProvider, ConnectKitButton, getDefaultClient } from "connectkit";
 // import { ApolloProvider } from '@apollo/react-hooks';
+import Script from 'next/script'
 
 import store from '../store/store'
 import { Provider } from 'react-redux';
 import Layout from "../Layout/layout"
 import toast, { Toaster } from 'react-hot-toast';
 
+// <Script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool" />
 export default function App({ Component, pageProps }: AppProps) {
   return   (
     <>
@@ -21,6 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <Provider store={store}>
     <Layout>
     <Component {...pageProps} />
+
 
     </Layout>    
  
@@ -33,4 +36,3 @@ export default function App({ Component, pageProps }: AppProps) {
  )
 }
 
-//? Project output path: /home/sayedex/Desktop/ALL FOLDER/Sayedweb/sayedexdevs/sanity
