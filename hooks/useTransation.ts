@@ -35,8 +35,6 @@ const useDirectCall = (signer:any,contractaddress:string) => {
     const myContract = await getContractInstance(signer,contractaddress);
     try {
       
-      const gasprice =await myContract.estimateGas?.[name](...args);
-      console.log(gasprice)
       const response = await myContract?.[name](
         ...args,
     );
