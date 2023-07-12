@@ -48,7 +48,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     
     await runMiddleware(req, res, cors)
-    await runMiddleware(req, res, rateLimiter)
+//    await runMiddleware(req, res, rateLimiter)
     const message = ethers.utils.solidityKeccak256(["string"], [req.body.msg]);
     const arrayifyMessage = await ethers.utils.arrayify(message);
     const result = await validationSigner.signMessage(arrayifyMessage)
