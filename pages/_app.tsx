@@ -13,7 +13,6 @@ import { Provider } from 'react-redux';
 import Layout from "../Layout/layout"
 import toast, { Toaster } from 'react-hot-toast';
 
-// <Script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool" />
 export default function App({ Component, pageProps }: AppProps) {
   return   (
     <>
@@ -24,7 +23,8 @@ export default function App({ Component, pageProps }: AppProps) {
     <Layout>
     <Component {...pageProps} />
 
-
+      <Script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool" />
+      
     </Layout>    
  
 
