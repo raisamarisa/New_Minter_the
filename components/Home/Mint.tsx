@@ -4,36 +4,64 @@ import useDirectCall from "../../hooks/useTransation";
 import { useAppSelector, useAppdispatch } from "../../hooks/redux";
 import { ConnectButtonwagmi, ExampleButton } from "../Header/connect";
 import { NFT_CONTRACT, NFT_PRICE } from "../../config";
-import { useAccount, useSigner, useSignMessage } from "wagmi";
+import { useAccount, useSignMessage, useSendTransaction } from "wagmi";
+import { useContractWrite, useWalletClient, useContractRead } from 'wagmi'
+import ercabi from "../../config/ABI/erc721.json";
+
 import { fetchTotalMint } from "../../hooks/Totalsupply";
 import { toast } from "react-hot-toast";
 import axios from "axios"
+import {provider} from '../../utils/providerweb3'
 export function Mint() {
   const dispatch = useAppdispatch();
   const { signMessageAsync, signMessage } = useSignMessage();
-  const { data: signer } = useSigner();
+  const { data: walletClient, isError, isLoading } = useWalletClient()
+  const {sendTransaction} = useSendTransaction();
+  const contract = new ethers.Contract(NFT_CONTRACT, ercabi, provider);
   const { address, isConnecting, isDisconnected, isConnected } = useAccount();
-  const { BuyToken, loading, Checklimit } = useDirectCall(signer, NFT_CONTRACT);
+  const { BuyToken, loading } = useDirectCall({}, NFT_CONTRACT);
   const supply = useAppSelector((state) => state.wallet.totalSupply);
   const [load, setload] = useState(false);
   useEffect(() => {
     setload(true);
     }, []);
+
+
   const Mintnft = async () => {
 
     if (!address) return toast.error("Connect your wallet");
-    const CheckLimitnft = await Checklimit("checkUserLimit",[address]);
-
-    if(CheckLimitnft){
+    let checkUserLimit = await contract.checkUserLimit(address)
+    if(checkUserLimit){
       const nonce = address.toString();
       let res = axios.post('/api/verify', {
         msg: nonce
       })
 
-      const signature = res.then((e) => {
-        BuyToken('mint',[1,e.data.result,nonce])
+      const signature = res.then(async (e) => {
+        let tx = await contract.populateTransaction.mint(1, e.data.result, nonce);
+        console.log(await provider.estimateGas(tx));
+        let sent = await walletClient?.sendTransaction(tx as any);
+        console.log(sent, tx)
+        toast.success("Minted")
+//        BuyToken('mint',[1,e.data.result,nonce], contract)
       }).catch(err => {
-        toast.error(err.response.data)
+        if (err.response && err.response.data)
+            toast.error(err.response.data)
+        else if (err.message){
+          let msg = /"message\\":\\"execution reverted:(.*)\\"},/.exec(err.message)
+          if (msg[1]) {
+
+          toast.error(msg[1])
+          } else {
+            toast.error(err.message)
+
+          }
+          }
+        else {
+          toast.error("Failed")
+        }
+        console.log(err)
+
       });
 
     }else{

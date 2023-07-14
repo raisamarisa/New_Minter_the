@@ -1,43 +1,35 @@
-import {getContractInstance} from "../utils/Contracthelper";
 import React, { useState, useEffect } from 'react';
 import { Toast, toast } from 'react-hot-toast';
 import { ethers, } from "ethers";
 import ercabi from "../config/ABI/erc721.json";
 import {provider} from "../utils/providerweb3"
+import {NFT_CONTRACT} from "../config";
+import {useContractRead, useContractWrite} from "wagmi";
 
 const useDirectCall = (signer:any,contractaddress:string) => {
   const [loading, setSellTokenLoading] = useState(false);
 
 
 
-  const Checklimit = async ( fname: string,args: Array<any>) => {
-    const name = String(fname);
-    //coming from hook
-    const myContract = await getContractInstance(signer,contractaddress);
-    try {
-      const response = await myContract?.[name](...args);
-      return response;
-    } catch (error) {
-      //failed
-      return false;
-    }
-  };
 
 
 
 
 
-  const BuyToken = async ( fname: string,args: Array<any>) => {
+
+  const BuyToken = async ( fname: string,args: Array<any>, myContract: any) => {
     const name = String(fname);
     setSellTokenLoading(true);
     
     //coming from hook
-    const myContract = await getContractInstance(signer,contractaddress);
     try {
       
-      const response = await myContract?.[name](
+      const tx = await myContract.mint(
         ...args,
     );
+      provider.estimateGas(tx)
+      let signed = signer.signTransaction(tx);
+
 
       const receipt = await response.wait();
       toast.success("Nft mint successfully");
@@ -54,7 +46,7 @@ const useDirectCall = (signer:any,contractaddress:string) => {
 
 
 
-  return { loading ,BuyToken,Checklimit};
+  return { loading ,BuyToken};
 };
 
 export default useDirectCall;

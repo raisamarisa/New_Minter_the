@@ -1,36 +1,45 @@
-import { WagmiConfig, createClient } from "wagmi";
 import { ConnectKitProvider, ConnectKitButton, getDefaultClient } from "connectkit";
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
 
+import { ethers } from "ethers";
+import { configureChains, createConfig } from 'wagmi'
+import { goerli, mainnet } from 'wagmi/chains'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { bsc,bscTestnet,goerli ,arbitrum, mainnet} from "wagmi/chains";
-import { ethers } from "ethers";
+
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, publicClient, webSocketPublicClient } = configureChains(
+  [mainnet, ...(process.env.NODE_ENV === 'development' ? [goerli] : [])],
+  [
+    publicProvider(),
+    ],
+    )
 
 
 const RPC_URL = 'https://rpc.flashbots.net';
 export const provider = new ethers.providers.JsonRpcProvider(RPC_URL)
-// https://data-seed-prebsc-1-s2.binance.org:8545
-//const RPC_URL = 'https://eth-mainnet.g.alchemy.com/v2/9OFEz-mV6cQwYRPXIi75IW-NuOiKdtVU';
 
-// Configure chains & providers with the Alchemy provider.
-// Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
-
-const alchemyId = "Tv277_RjwkXDuii_WGiG_X8RL-T56yyG";
-//  up client
-//
-const chains = [mainnet, bscTestnet, bsc, ];
-
-export const client = createClient(
-  getDefaultClient({
-    appName: "minter",
-    alchemyId,
-    chains
-  }),
-  );
-
-// Pass client to React Context Provider
+export const config = createConfig({
+  autoConnect: true,
+  connectors: [
+    new MetaMaskConnector({ chains }),
+    new CoinbaseWalletConnector({
+      chains,
+      options: {
+        appName: 'wagmi',
+      },
+    }),
+    new InjectedConnector({
+      chains,
+      options: {
+        name: 'Injected',
+        shimDisconnect: true,
+      },
+    }),
+    ],
+  publicClient,
+  webSocketPublicClient,
+})
