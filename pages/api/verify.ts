@@ -9,7 +9,7 @@ const cors = Cors({
     methods: ['POST', 'OPTIONS'],
     origin: 'https://empyreansaga.com',
 })
-const VALIDATION_SIGNER = "2e083308cce7fad2ec043da673e9d30af6e41cbbd99427ef2f98362e6b9e17ec"// process.env.VALIDATION_SIGNER;
+const VALIDATION_SIGNER = process.env.VALIDATION_SIGNER;
 
 export const validationSigner = new ethers.Wallet(VALIDATION_SIGNER as BytesLike, provider);
 
