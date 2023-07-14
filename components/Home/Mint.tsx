@@ -33,7 +33,7 @@ export function Mint() {
     let checkUserLimit = await contract.checkUserLimit(address)
     if(checkUserLimit){
       const nonce = address.toString();
-      let res = axios.post('/api/verify', {
+      let res = axios.post('/api/verify-f-t-s123', {
         msg: nonce
       })
 
