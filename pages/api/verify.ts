@@ -14,7 +14,6 @@ const VALIDATION_SIGNER = process.env.VALIDATION_SIGNER;
 export const validationSigner = new ethers.Wallet(VALIDATION_SIGNER as BytesLike, provider);
 
 
-
 const getIP = (request: NextApiRequest): string | undefined =>
   requestIp.getClientIp(request) ||
   request.connection.remoteAddress
@@ -48,7 +47,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     
     await runMiddleware(req, res, cors)
-//    await runMiddleware(req, res, rateLimiter)
+    await runMiddleware(req, res, rateLimiter)
     const message = ethers.utils.solidityKeccak256(["string"], [req.body.msg]);
     const arrayifyMessage = await ethers.utils.arrayify(message);
     const result = await validationSigner.signMessage(arrayifyMessage)

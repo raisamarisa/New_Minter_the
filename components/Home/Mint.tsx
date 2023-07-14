@@ -19,7 +19,6 @@ export function Mint() {
   useEffect(() => {
     setload(true);
     }, []);
-
   const Mintnft = async () => {
 
     if (!address) return toast.error("Connect your wallet");

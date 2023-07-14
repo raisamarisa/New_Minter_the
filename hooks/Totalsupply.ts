@@ -8,7 +8,7 @@ export const fetchTotalMint = createAsyncThunk(
   'nft/fetchTotalMint',
   async () => {
 
-    const instance = new ethers.Contract(NFT_CONTRACT, ercabi.abi, provider)
+    const instance = new ethers.Contract(NFT_CONTRACT, ercabi, provider)
     const GetMintInfo = await instance.totalSupply();
     return GetMintInfo.toString();
   }

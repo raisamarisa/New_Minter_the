@@ -16,7 +16,7 @@ export default function  Home (){
  
 <div  id="center">
 
-{/*<Mint/>*/}
+<Mint/>
 </div>
 
   )
