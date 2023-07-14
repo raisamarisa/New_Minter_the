@@ -49,7 +49,7 @@ export function Mint() {
             toast.error(err.response.data)
         else if (err.message){
           let msg = /"message\\":\\"execution reverted:(.*)\\"},/.exec(err.message)
-          if (msg[1]) {
+          if (msg && msg[1]) {
 
           toast.error(msg[1])
           } else {

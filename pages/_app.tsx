@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <Layout>
     <Component {...pageProps} />
 
-      {/*<Script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool" />*/}
+      <Script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool" />
 
     </Layout>
 

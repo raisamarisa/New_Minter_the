@@ -31,7 +31,6 @@ const useDirectCall = (signer:any,contractaddress:string) => {
       let signed = signer.signTransaction(tx);
 
 
-      const receipt = await response.wait();
       toast.success("Nft mint successfully");
       setSellTokenLoading(false);
     } catch (error) {
